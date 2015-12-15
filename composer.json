@@ -1,0 +1,21 @@
+{
+    "name": "firegate666/doctrine-sessionhandler",
+    "description": "Simple doctrine session handler",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Marco Behnke",
+            "email": "marco@behnke.biz"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "firegate666\\Doctrine\\Session\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "doctrine/orm": "^2.5"
+    }
+}
