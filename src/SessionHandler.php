@@ -18,12 +18,16 @@ class SessionHandler implements SessionHandlerInterface
     /** @var EntityManager */
     protected $entityManager;
 
+    /** @var SessionDataInterface */
+    protected $sessionDataClass;
+
     /**
      * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, SessionDataInterface $sessionDataClass)
     {
         $this->entityManager = $entityManager;
+        $this->sessionDataClass = $sessionDataClass;
     }
 
     /**
@@ -43,7 +47,7 @@ class SessionHandler implements SessionHandlerInterface
     public function destroy($sessionId)
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->delete(SessionData::class, 's');
+        $qb->delete(get_class($this->sessionDataClass), 's');
         $qb->where($qb->expr()->eq('s.sessionId', ':sessionId'));
         $qb->setParameter('sessionId', $sessionId);
 
@@ -61,7 +65,7 @@ class SessionHandler implements SessionHandlerInterface
     public function gc($maxLifetime)
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $qb->delete(SessionData::class, 's');
+        $qb->delete(get_class($this->sessionDataClass), 's');
         $qb->where($qb->expr()->lt('s.lastHit', time() - $maxLifetime));
 
         $qb->getQuery()->execute();
@@ -110,14 +114,14 @@ class SessionHandler implements SessionHandlerInterface
     /**
      * @param string $sessionId
      * @param string|null $encodedSessionData
-     * @return SessionData
+     * @return SessionDataInterface
      */
     protected function getOrCreateSessionData($sessionId, $encodedSessionData = null)
     {
-        $sessionData = $this->entityManager->getRepository(SessionData::class)->find($sessionId);
+        $sessionData = $this->entityManager->getRepository(get_class($this->sessionDataClass))->find($sessionId);
 
         if (empty($sessionData)) { // no session found, create one
-            $sessionData = new SessionData();
+            $sessionData = clone $this->sessionDataClass;
             $sessionData->setSessionId($sessionId);
         }
 
