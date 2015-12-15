@@ -1,6 +1,6 @@
 {
     "name": "firegate666/doctrine-sessionhandler",
-    "description": "Simple doctrine session handler",
+    "description": "Simple doctrine PHP session handler",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
