@@ -2,7 +2,7 @@
 
 namespace firegate666\Doctrine\Session;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use SessionHandlerInterface;
 
 /**
@@ -15,16 +15,17 @@ use SessionHandlerInterface;
 class SessionHandler implements SessionHandlerInterface
 {
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
     /** @var SessionDataInterface */
     protected $sessionDataClass;
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
+     * @param SessionDataInterface $sessionDataClass
      */
-    public function __construct(EntityManager $entityManager, SessionDataInterface $sessionDataClass)
+    public function __construct(EntityManagerInterface $entityManager, SessionDataInterface $sessionDataClass)
     {
         $this->entityManager = $entityManager;
         $this->sessionDataClass = $sessionDataClass;
