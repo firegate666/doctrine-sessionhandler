@@ -23,6 +23,7 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * @param EntityManagerInterface $entityManager
+     * @param SessionDataInterface $sessionDataClass
      */
     public function __construct(EntityManagerInterface $entityManager, SessionDataInterface $sessionDataClass)
     {
