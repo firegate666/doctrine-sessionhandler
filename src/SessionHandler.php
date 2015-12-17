@@ -174,7 +174,11 @@ class SessionHandler implements SessionHandlerInterface
         $sessionData->setLastHit(time());
 
         $this->entityManager->persist($sessionData);
-        $this->entityManager->flush();
+
+        // as soon as EntityManagerInterface or ObjectManager support entity as parameter, we can move this change in
+        // will flush only the given session data which will improve db persisting since it has no side effects on the
+        // application
+        $this->entityManager->flush(/*$sessionData*/);
 
         return $sessionData;
     }
