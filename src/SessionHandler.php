@@ -32,7 +32,13 @@ class SessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * @return bool
+     * Close the session
+     * @link http://php.net/manual/en/sessionhandlerinterface.close.php
+     * @return bool <p>
+     * The return value (usually TRUE on success, FALSE on failure).
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function close()
     {
@@ -41,9 +47,13 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * Destroy a session
-     *
+     * @link http://php.net/manual/en/sessionhandlerinterface.destroy.php
      * @param string $sessionId The session ID being destroyed.
-     * @return bool
+     * @return bool <p>
+     * The return value (usually TRUE on success, FALSE on failure).
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function destroy($sessionId)
     {
@@ -59,9 +69,16 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * Cleanup old sessions
-     *
-     * @param int $maxLifetime
-     * @return bool
+     * @link http://php.net/manual/en/sessionhandlerinterface.gc.php
+     * @param int $maxLifetime <p>
+     * Sessions that have not updated for
+     * the last maxLifetime seconds will be removed.
+     * </p>
+     * @return bool <p>
+     * The return value (usually TRUE on success, FALSE on failure).
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function gc($maxLifetime)
     {
@@ -76,10 +93,14 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * Initialize session
-     *
+     * @link http://php.net/manual/en/sessionhandlerinterface.open.php
      * @param string $savePath The path where to store/retrieve the session.
      * @param string $sessionId The session id.
-     * @return bool
+     * @return bool <p>
+     * The return value (usually TRUE on success, FALSE on failure).
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function open($savePath, $sessionId)
     {
@@ -89,9 +110,14 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * Read session data
-     *
+     * @link http://php.net/manual/en/sessionhandlerinterface.read.php
      * @param string $sessionId The session id to read data for.
-     * @return string
+     * @return string <p>
+     * Returns an encoded string of the read data.
+     * If nothing was read, it must return an empty string.
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function read($sessionId)
     {
@@ -101,10 +127,20 @@ class SessionHandler implements SessionHandlerInterface
 
     /**
      * Write session data
-     *
+     * @link http://php.net/manual/en/sessionhandlerinterface.write.php
      * @param string $sessionId The session id.
-     * @param string $encodedSessionData
-     * @return bool
+     * @param string $encodedSessionData <p>
+     * The encoded session data. This data is the
+     * result of the PHP internally encoding
+     * the $_SESSION super global to a serialized
+     * string and passing it as this parameter.
+     * Please note sessions use an alternative serialization method.
+     * </p>
+     * @return bool <p>
+     * The return value (usually TRUE on success, FALSE on failure).
+     * Note this value is returned internally to PHP for processing.
+     * </p>
+     * @since 5.4.0
      */
     public function write($sessionId, $encodedSessionData)
     {
@@ -113,6 +149,10 @@ class SessionHandler implements SessionHandlerInterface
     }
 
     /**
+     * Fetches the current session data
+     * Creates new object if needed, optionally sets initial encoded session data
+     * Updates last hit
+     *
      * @param string $sessionId
      * @param string|null $encodedSessionData
      * @return SessionDataInterface
